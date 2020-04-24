@@ -20,7 +20,7 @@ class topicauthor_info
 				'config'	=> array(
 					'title' => 'ACP_TOPICAUTHOR_CONFIG_SETTINGS',
 					'auth' 	=> 'ext_dmzx/topicauthor && acl_a_board',
-					'cat' 	=> array('ACP_TOPICAUTHOR')
+					'cat' 	=> array('ACP_TOPICAUTHOR'),
 				),
 			),
 		);

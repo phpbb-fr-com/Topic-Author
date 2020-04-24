@@ -10,6 +10,7 @@
 namespace dmzx\topicauthor\controller;
 
 use phpbb\config\config;
+use phpbb\language\language;
 use phpbb\template\template;
 use phpbb\log\log_interface;
 use phpbb\user;
@@ -35,28 +36,34 @@ class admin_controller
 	/** @var string */
 	protected $u_action;
 
+	/** @var language */
+	protected $language;
+
 	/**
-	* Constructor
-	*
-	* @param config					$config
-	* @param template				$template
-	* @param log_interface			$log
-	* @param user					$user
-	* @param request_interface		$request
-	*/
+	 * Constructor
+	 *
+	 * @param config            $config
+	 * @param template          $template
+	 * @param log_interface     $log
+	 * @param user              $user
+	 * @param request_interface $request
+	 * @param language          $language
+	 */
 	public function __construct(
 		config $config,
 		template $template,
 		log_interface $log,
 		user $user,
-		request_interface $request
+		request_interface $request,
+		language $language
 	)
 	{
-		$this->config 			= $config;
-		$this->template 		= $template;
-		$this->log 				= $log;
-		$this->user 			= $user;
-		$this->request 			= $request;
+		$this->config = $config;
+		$this->template = $template;
+		$this->log = $log;
+		$this->user = $user;
+		$this->request = $request;
+		$this->language = $language;
 	}
 
 	public function display_options()
@@ -77,7 +84,7 @@ class admin_controller
 			// Add option settings change action to the admin log
 			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_TOPICAUTHOR_SAVED');
 
-			trigger_error($this->user->lang['TOPICAUTHOR_CONFIG_SAVED'] . adm_back_link($this->u_action));
+			trigger_error($this->language->lang('TOPICAUTHOR_CONFIG_SAVED') . adm_back_link($this->u_action));
 		}
 
 		$this->template->assign_vars(array(
@@ -91,11 +98,11 @@ class admin_controller
 	}
 
 	/**
-	* Set the options a user can configure
-	*
-	* @return null
-	* @access protected
-	*/
+	 * Set the options a user can configure
+	 *
+	 * @return void
+	 * @access protected
+	 */
 	protected function set_options()
 	{
 		$this->config->set('topicauthor_enable', $this->request->variable('topicauthor_enable', 0));
@@ -105,12 +112,12 @@ class admin_controller
 	}
 
 	/**
-	* Set page url
-	*
-	* @param string $u_action Custom form action
-	* @return null
-	* @access public
-	*/
+	 * Set page url
+	 *
+	 * @param string $u_action Custom form action
+	 * @return void
+	 * @access public
+	 */
 	public function set_page_url($u_action)
 	{
 		$this->u_action = $u_action;
